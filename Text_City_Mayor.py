@@ -11,11 +11,11 @@ def game():
             
     ##########
     
-    def data():
-        print(f'Mayor {name}! Here is the data about our city this year: ')
+    def data(name):
+        slowtext(f'Mayor {name}! Here is the data about our city this year: ')
     
     def choosename():
-        name=input(slowtext('Congratulations on being elected as the mayor! What do you want to be known as? '))
+        name=input(slowtext('Congratulations on being elected as the mayor! How do you want to be known? '))
     
     def savefile(order):
         def readdata():
@@ -26,13 +26,14 @@ def game():
             else:
                 answer=input(slowtext('savefile.db not found. Create new save file? y/n '))
                 if(answer.lower()=='y'):
-                    return 'sukces'
+                    return 'ok'
                 elif(answer.lower()=='n'):
-                    input(slowtext('Press any button to exit the game. '))
+                    input(slowtext('Press ENTER to exit the game. '))
                     return 'exit'
                 else:
                     slowtext('Unkown answer. ')
-                    return readsavefile()
+                    return readdata()
+        
         def savedata():
             pass
         
@@ -41,7 +42,7 @@ def game():
     def main():
         data=savefile('readdata()')
         if(data!='exit'):
-            print('x')
+            pass
 
     main()
 

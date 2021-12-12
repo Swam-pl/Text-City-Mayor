@@ -37,7 +37,7 @@ def game():
         def savedata():
             pass
         
-        return exec(order)
+        return eval(order)
         
     def main():
         data=savefile('readdata()')

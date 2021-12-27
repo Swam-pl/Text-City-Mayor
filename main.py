@@ -52,7 +52,6 @@ def game():
                 cur=conn.cursor()
                 data=tuple(cur.execute("SELECT * FROM savedata LIMIT 1;"))[0]
                 conn.close()
-                print(data)
                 try:
                     if(len(data)!=9):
                         raise Exception

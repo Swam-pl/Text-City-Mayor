@@ -5,7 +5,6 @@
 #
 ##############################
 
-
 from time import sleep
 import datetime
 import os
@@ -26,7 +25,7 @@ def game():
     
     def data(data):
         '''
-        A function called at the beginning of the every turn. It takes a tuple with all the game data as an arguments
+        A function called at the beginning of the every turn. It takes a tuple with all the game data as an argument
         and prints data from it.
         '''
         slowtext(f'Mayor {data[0]}! Here is the data about our city this year: ')
@@ -41,18 +40,24 @@ def game():
     def savefile(order):
         def readdata():
             '''
-            A function responsible for reading data from savefile.db.
+            A function responsible for reading data from savefile.db. It doesn't take any arguments.
             It checks if savefile.db exists and if it does it returns a tuple with the first record of it.
             If not, it asks if savefile.db should be created and if so: creates a new file and returns itself.
-            If the player decides not to create a new file it prompts the user to click ENTER to leave the game and 
+            If the player decides not to create a new file it prompts the user to click ENTER to leave the game and
             returns a string with a text of "exit".
             If the players enters an unkown command the function will return itself.
             '''
             if(os.path.isfile('savefile.db')):
                 conn=sqlite3.connect('savefile.db')
                 cur=conn.cursor()
-                data=tuple(cur.execute("SELECT * FROM savedata LIMIT 1;"))
+                data=tuple(cur.execute("SELECT * FROM savedata LIMIT 1;"))[0]
                 conn.close()
+                print(data)
+                try:
+                    if(len(data)!=9):
+                        raise Exception
+                except Exception as e:
+                    slowtext('Error 001: Database Error - refer to errors.txt for more information.')
                 return data
             else:
                 answer=input(slowtext('savefile.db not found. Create new save file? y/n '))
@@ -70,7 +75,7 @@ def game():
                                     "respect" INTEGER,
                                     "projected_support" INTEGER,
                                     PRIMARYKEY("ID")
-                                )''')
+                                );''')
                     conn.commit()
                     conn.close()
                     slowtext('Save file (savefile.db) created succesfully.')
@@ -79,10 +84,13 @@ def game():
                     input(slowtext('Press ENTER to exit the game. '))
                     return 'exit'
                 else:
-                    slowtext('Unkown answer. ')
+                    slowtext('Unkown answer.')
                     return readdata()
         
         def savedata():
+            '''
+            A function responsible for saving data.
+            '''
             pass
         
         return eval(order)

@@ -1,11 +1,15 @@
-##############################
-# 
-# Text City Mayor
-# Created by Tobiasz Duliniec aka Swam-pl
-#
-##############################
+#############################################
+#                                           #
+#              Text City Mayor              #
+#  Created by Tobiasz Duliniec aka Swam-pl  #
+#                                           #
+#############################################
 
 from time import sleep
+try:
+    from winsound import Beep
+except:
+    pass
 import datetime
 import os
 import sqlite3
@@ -17,10 +21,19 @@ def game():
         and prints each letter of it every 0.01s. The function returns an empty string.
         '''
         for letter in text:
+            try:
+                Beep(1000,3)
+            except:
+                pass
             print(letter,end='')
-            sleep(0.01)
+            sleep(0.2)
         return ''
-            
+    
+    def errors(code):
+        def databaseerror():
+            slowtext('Error 001: Database Error - refer to errors.txt for more information.')
+        exec(f'{code}()')
+    
     ##########
     
     def data(data):
@@ -56,7 +69,7 @@ def game():
                     if(len(data)!=9):
                         raise Exception
                 except Exception as e:
-                    slowtext('Error 001: Database Error - refer to errors.txt for more information.')
+                    errors('databaseerror')
                 return data
             else:
                 answer=input(slowtext('savefile.db not found. Create new save file? y/n '))
@@ -95,9 +108,10 @@ def game():
         return eval(order)
         
     def main():
+        errors('databaseerror')
         data=savefile('readdata()')
         if(data!='exit'):
-            print('not exit')
+            pass
 
     main()
 

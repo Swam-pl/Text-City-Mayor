@@ -108,7 +108,6 @@ def game():
         return eval(order)
         
     def main():
-        errors('databaseerror')
         data=savefile('readdata()')
         if(data!='exit'):
             pass

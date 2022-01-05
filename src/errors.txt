@@ -1,0 +1,8 @@
+[ENG]
+While playing Text City Mayor you might encounter some errors. Below is a list of them with information about them.
+
+---
+
+Error 001: Database Error
+This error happens when something went wrong with reading data from the database. Example could be that there are no records in the database. To fix this you can:
+1. Delete the database file/move it to another folder - the game will ask if it should create a new savefile

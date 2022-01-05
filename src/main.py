@@ -58,7 +58,7 @@ def game():
             If not, it asks if savefile.db should be created and if so: creates a new file and returns itself.
             If the player decides not to create a new file it prompts the user to click ENTER to leave the game and
             returns a string with a text of "exit".
-            If the players enters an unkown command the function will return itself.
+            If the player enters an unkown command the function will return itself.
             '''
             if(os.path.isfile('savefile.db')):
                 conn=sqlite3.connect('savefile.db')

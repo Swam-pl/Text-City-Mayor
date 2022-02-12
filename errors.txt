@@ -8,10 +8,7 @@ This error happens when something went wrong with reading data from the database
 1. Delete the database file/move it to another folder - the game will ask if it should create a new savefile
 
 ===
-
 [PL]
-
----
 
 Podczas gry w Text City Mayor, możesz natrafić na błędy. Poniżej znajduje się lista z informacjami o nich.
 

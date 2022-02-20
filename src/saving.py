@@ -72,7 +72,7 @@ def readdata():
                         );''')
             conn.commit()
             conn.close()
-            main.slowtext('Save file (savefile.db) created succesfully.')
+            slowtext('Save file (savefile.db) created succesfully.')
             return readdata()
         elif(answer=='n'):
             input(slowtext('Press ENTER to exit the game. '))

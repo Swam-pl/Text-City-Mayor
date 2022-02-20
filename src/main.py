@@ -32,9 +32,14 @@ def game():
     def errors(code):
         def databaseerror():
             slowtext('Error 001: Database Error - refer to errors.txt for more information.')
+            
         exec(f'{code}()')
     
     ##########
+    
+    def mainloop(data):
+        while(data[0]==1):
+            pass
     
     def data(data):
         '''
@@ -51,6 +56,18 @@ def game():
         return input(slowtext('Congratulations on being elected as the mayor! How do you want to be known? '))
     
     def savefile(order):
+        def createdata():
+            answer=input(slowtext('No saved games found in save file. Start new game? y/n '))
+            if(answer.lower().strip()=='y'):
+                pass #todo         
+            elif(answer.lower().strip()=='n'):
+                input(slowtext('The game will now quit. Press ENTER to continue. '))
+                return 'exit'
+            else:
+                slowtext('Unkown command.')
+                return createdata()
+            return data
+            
         def readdata():
             '''
             A function responsible for reading data from savefile.db. It doesn't take any arguments.
@@ -65,11 +82,15 @@ def game():
                 cur=conn.cursor()
                 data=tuple(cur.execute("SELECT * FROM savedata LIMIT 1;"))[0]
                 conn.close()
-                try:
-                    if(len(data)!=9):
-                        raise Exception
-                except Exception as e:
-                    errors('databaseerror')
+                if(len(data)==0):
+                    data=createdata()
+                else:
+                    try:
+                        if(len(data)!=9):
+                            raise Exception
+                    except Exception as e:
+                        errors('databaseerror')
+                        data='exit'
                 return data
             else:
                 answer=input(slowtext('savefile.db not found. Create new save file? y/n '))
@@ -79,6 +100,7 @@ def game():
                     cur.execute('''CREATE TABLE "savedata" (
                                     "ID" INTEGER,
                                     "username" TEXT,
+                                    "status" INTEGER,
                                     "game_start_date" TEXT,
                                     "in_game_date" TEXT,
                                     "last_election_date" TEXT,

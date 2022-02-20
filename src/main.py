@@ -86,7 +86,7 @@ def game():
                     data=createdata()
                 else:
                     try:
-                        if(len(data)!=9):
+                        if(len(data)!=10):
                             raise Exception
                     except Exception as e:
                         errors('databaseerror')
@@ -94,7 +94,7 @@ def game():
                 return data
             else:
                 answer=input(slowtext('savefile.db not found. Create new save file? y/n '))
-                if(answer.lower()=='y'):
+                if(answer.lower().strip()=='y'):
                     conn=sqlite3.connect('safefile.db')
                     cur=conn.cursor()
                     cur.execute('''CREATE TABLE "savedata" (
@@ -114,7 +114,7 @@ def game():
                     conn.close()
                     slowtext('Save file (savefile.db) created succesfully.')
                     return readdata()
-                elif(answer.lower()=='n'):
+                elif(answer.lower().strip()=='n'):
                     input(slowtext('Press ENTER to exit the game. '))
                     return 'exit'
                 else:

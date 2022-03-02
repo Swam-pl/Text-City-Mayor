@@ -2,15 +2,20 @@
 #                                           #
 #              Text City Mayor              #
 #                (saving.py)                #
+#                                           #
 #  Created by Tobiasz Duliniec aka Swam-pl  #
 #                                           #
 #############################################
+
+'''
+Various functions to work with save data.
+'''
 
 import datetime
 import os
 import sqlite3
 
-from functions import errors,slowtext
+from functions import errors, slowtext
 
 def createdata():
     '''TODO: FINISHING THE FUNCTION'''
@@ -40,7 +45,7 @@ def readdata():
     if(os.path.isfile('savefile.db')):
         conn=sqlite3.connect('savefile.db')
         cur=conn.cursor()
-        data=tuple(cur.execute("SELECT * FROM savedata LIMIT 1;"))
+        data=list(cur.execute("SELECT * FROM savedata LIMIT 1;"))
         conn.close()
         if(len(data)==0):
             data=createdata()
@@ -59,8 +64,8 @@ def readdata():
             cur=conn.cursor()
             cur.execute('''CREATE TABLE "savedata" (
                             "ID" INTEGER,
-                            "username" TEXT,
                             "status" INTEGER,
+                            "username" TEXT,
                             "game_start_date" TEXT,
                             "in_game_date" TEXT,
                             "last_election_date" TEXT,
@@ -72,7 +77,7 @@ def readdata():
                         );''')
             conn.commit()
             conn.close()
-            slowtext('Save file (savefile.db) created succesfully.')
+            slowtext('Save file (savefile.db) created successfully.')
             return readdata()
         elif(answer=='n'):
             input(slowtext('Press ENTER to exit the game. '))

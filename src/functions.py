@@ -7,6 +7,10 @@
 #                                           #
 #############################################
 
+'''
+Various functions used by multiple files.
+'''
+
 from time import sleep
 try:
     from winsound import Beep

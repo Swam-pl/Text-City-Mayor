@@ -7,31 +7,35 @@
 #                                           #
 #############################################
 
-from time import sleep
-try:
-    from winsound import Beep
-except:
-    pass
 import datetime
 
-from functions import errors,slowtext
-from saving import createdata, readdata, savedata
+from functions import errors, slowtext
+from saving import readdata, savedata
 
-def data(data):
+def showdata(data):
     '''
     A function called at the beginning of the every turn. It takes a tuple with all the game data as an argument
     and prints data from it.
     '''
-    slowtext(f'Mayor {data[0]}! Here is the data about our city this year: ')
-    
+    slowtext(f'{data[4]}')
+    slowtext('------')
+    slowtext(f'Mayor {data[2]}! Here is the data about our for the day: ')
+    slowtext(
+        f'population: data[7]',
+        f'money: {data[6]}',
+        f'respect among townspeople: {data[8]}',
+        f'projected support: {data[9]}',
+        )
+
 def mainloop(data):
-    while(data[0]==1):
-        data()
+    while(data[1]==1):
+        showdata()
+        savedata()
 
 def main():
     data=readdata()
     if(data!='exit'):
-        mainloop()
+        mainloop(data)
 
 if(__name__=='__main__'):
     main()

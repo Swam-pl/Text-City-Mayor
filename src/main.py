@@ -24,23 +24,22 @@ except ImportError as e:
 
 def showdata(data):
     '''
-    A function called at the beginning of the every turn. It takes a tuple with all the game data as an argument
+    A function called at the beginning of the every turn. It takes
+    a list with all the game data as an argument
     and prints data from it.
     '''
-    slowtext(f'{data[4]}')
-    slowtext('------')
-    slowtext(f'Mayor {data[2]}! Here is the data about our for the day: ')
-    slowtext(
-        f'population: data[7]',
-        f'money: {data[6]}',
-        f'respect among townspeople: {data[8]}',
-        f'projected support: {data[9]}',
-        )
+    slowtext(f'{data[4]}\n',
+    '------\n',
+    f'Mayor {data[2]}! Here is the data about our town for the day:\n',
+    f'Population: {data[7]}\n',
+    f'Money: {data[6]}\n',
+    f'Respect among townspeople: {data[8]}\n',
+    f'Projected support: {data[9]}\n')
 
 def mainloop(data):
     while(data[1]==1):
-        showdata()
-        savedata()
+        showdata(data)
+        savedata(data)
 
 def main():
     data=readdata()

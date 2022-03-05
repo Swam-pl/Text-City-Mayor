@@ -15,7 +15,13 @@ import datetime
 import os
 import sqlite3
 
-from functions import errors, slowtext
+try:
+    from functions import errors, slowtext
+except ImportError as e:
+    print(f'Error 002: Import Error - refer to errors.txt for more information ({e}).')
+    #When editing line above remember to also change it in other files.
+    input('Press ENTER to exit the game.')
+    raise SystemExit
 
 def createdata():
     '''TODO: FINISHING THE FUNCTION'''

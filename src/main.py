@@ -7,10 +7,20 @@
 #                                           #
 #############################################
 
+'''
+Main file of the game.
+'''
+
 import datetime
 
-from functions import errors, slowtext
-from saving import readdata, savedata
+try:
+    from functions import errors, slowtext
+    from saving import readdata, savedata
+except ImportError as e:
+    print(f'Error 002: Import Error - refer to errors.txt for more information ({e}).')
+    #When editing line above remember to also change it in other files.
+    input('Press ENTER to exit the game.')
+    raise SystemExit
 
 def showdata(data):
     '''

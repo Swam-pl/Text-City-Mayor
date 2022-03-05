@@ -18,18 +18,19 @@ try:
 except ImportError:
     pass
 
-def slowtext(text):
+def slowtext(*args):
     '''
     A function responsible for printing text letter by letter. It takes a text to print as an argument
     and prints each letter of it every 0.01s. The function returns an empty string.
     '''
-    for letter in text:
-        try:
-            Beep(1000,2)
-        except RuntimeError:
-            pass
-        print(letter,end='')
-        sleep(0.1)
+    for text in args:
+        for letter in text:
+            try:
+                Beep(1000,2)
+            except RuntimeError:
+                pass
+            print(letter,end='')
+            sleep(0.1)
     return ''
 
 def errors(code,e):

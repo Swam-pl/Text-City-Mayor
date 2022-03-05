@@ -12,9 +12,10 @@ Various functions used by multiple files.
 '''
 
 from time import sleep
+
 try:
     from winsound import Beep
-except:
+except ImportError:
     pass
 
 def slowtext(text):
@@ -25,14 +26,14 @@ def slowtext(text):
     for letter in text:
         try:
             Beep(1000,2)
-        except:
+        except RuntimeError:
             pass
         print(letter,end='')
         sleep(0.1)
     return ''
 
-def errors(code):
-    def databaseerror():
-        slowtext('Error 001: Database Error - refer to errors.txt for more information.')
+def errors(code,e):
+    def databaseerror(e):
+        slowtext(f'Error 001: Database Error - refer to errors.txt for more information ({e}).')
         
-    exec(f'{code}()')
+    exec(f'{code}(e)')

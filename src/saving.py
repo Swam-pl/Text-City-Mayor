@@ -24,19 +24,22 @@ except ImportError as e:
     raise SystemExit
 
 def createdata():
-    '''TODO: FINISHING THE FUNCTION'''
     answer=input(slowtext('No saved games found in save file. Start new game? y/n ')).strip().lower()
-    if(answer=='y'):
-        username=input(slowtext('Congratulations on being elected as the mayor! How do you want to be known? '))
-        conn=sqlite3.connect('savefile.db')
-        cur=conn.cursor()
-        conn.close()
-    elif(answer=='n'):
-        input(slowtext('The game will now quit. Press ENTER to continue. '))
-        data='exit'
-    else:
-        slowtext('Unkown command.')
-        return createdata()
+    match answer:
+        case 'y':
+            username=input(slowtext('Congratulations on being elected as the mayor! How do you want to be known? '))
+            conn=sqlite3.connect('savefile.db')
+            cur=conn.cursor()
+            cur.execute(f'INSERT INTO savedata VALUES (1,1,?,121,21,21,200,8,7,6);',(username,))
+            conn.commit()
+            data=list(list(cur.execute('SELECT * FROM savedata LIMIT 1;'))[0])
+            conn.close()
+        case 'n':
+            input(slowtext('The game will now quit. Press ENTER to continue. '))
+            data='exit'
+        case _:
+            slowtext('Unkown command.')
+            return createdata()
     return data
     
 def readdata():
@@ -53,47 +56,53 @@ def readdata():
         cur=conn.cursor()
         data=list(cur.execute("SELECT * FROM savedata LIMIT 1;"))
         conn.close()
-        if(len(data)==0):
-            data=createdata()
+        if(len(data)!=0):
+            data=list(data[0])
         else:
-            try:
-                if(len(data)!=10):
-                    raise Exception
-            except Exception as e:
-                errors('databaseerror')
-                data='exit'
+            data=createdata()
+        try:
+            if(len(data)!=10):
+                raise Exception
+        except Exception:
+            e=f'incorrect number of columns in database - expected 10, got {len(data)}'
+            errors('databaseerror',e)
+            input(slowtext('Press ENTER to exit the game. '))
+            data='exit'
         return data
     else:
         answer=input(slowtext('savefile.db not found. Create new save file? y/n ')).strip().lower()
-        if(answer=='y'):
-            conn=sqlite3.connect('savefile.db')
-            cur=conn.cursor()
-            cur.execute('''CREATE TABLE "savedata" (
-                            "ID" INTEGER,
-                            "status" INTEGER,
-                            "username" TEXT,
-                            "game_start_date" TEXT,
-                            "in_game_date" TEXT,
-                            "last_election_date" TEXT,
-                            "money" INTEGER,
-                            "population" INTEGER,
-                            "respect" INTEGER,
-                            "projected_support" INTEGER,
-                            PRIMARY KEY("ID" AUTOINCREMENT)
-                        );''')
-            conn.commit()
-            conn.close()
-            slowtext('Save file (savefile.db) created successfully.')
-            return readdata()
-        elif(answer=='n'):
-            input(slowtext('Press ENTER to exit the game. '))
-            return 'exit'
-        else:
-            slowtext('Unkown answer.')
-            return readdata()
+        match answer:
+            case 'y':
+                conn=sqlite3.connect('savefile.db')
+                cur=conn.cursor()
+                cur.execute('''CREATE TABLE "savedata" (
+                                "ID" INTEGER,
+                                "status" INTEGER,
+                                "username" TEXT,
+                                "game_start_date" TEXT,
+                                "in_game_date" TEXT,
+                                "last_election_date" TEXT,
+                                "money" INTEGER,
+                                "population" INTEGER,
+                                "respect" INTEGER,
+                                "projected_support" INTEGER,
+                                PRIMARY KEY("ID" AUTOINCREMENT)
+                            );''')
+                conn.commit()
+                conn.close()
+                slowtext('Save file (savefile.db) created successfully.\n')
+                return createdata()
+            case 'n':
+                input(slowtext('Press ENTER to exit the game. '))
+                return 'exit'
+            case _:
+                slowtext('Unkown answer.')
+                return readdata()
 
-def savedata():
+def savedata(data):
     '''
     A function responsible for saving data.
     '''
-    pass
+    conn=sqlite3.connect('savefile.db')
+    cur=conn.cursor()
+    conn.close()

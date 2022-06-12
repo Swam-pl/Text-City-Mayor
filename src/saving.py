@@ -10,15 +10,13 @@
 '''
 Various functions to work with save data.
 '''
-
-import datetime
-import os
-import sqlite3
-
 try:
+    import datetime
+    import os
+    import sqlite3
     from functions import errors, slowtext
 except ImportError as e:
-    print(f'Error 002: Import Error - refer to errors.txt for more information ({e}).')
+    print(f'Error 002: Import Error - refer to manual.txt for more information ({e}).')
     #When editing line above remember to also change it in other files.
     input('Press ENTER to exit the game.')
     raise SystemExit
@@ -56,18 +54,19 @@ def readdata():
         cur=conn.cursor()
         data=list(cur.execute("SELECT * FROM savedata LIMIT 1;"))
         conn.close()
-        if(len(data)!=0):
+        length=len(data)
+        if(length!=0):
             data=list(data[0])
         else:
             data=createdata()
         try:
-            if(len(data)!=10):
+            if(length!=10):
                 raise Exception
         except Exception:
             e=f'incorrect number of columns in database - expected 10, got {len(data)}'
             errors('databaseerror',e)
             input(slowtext('Press ENTER to exit the game. '))
-            data='exit'
+            return 'exit'
         return data
     else:
         answer=input(slowtext('savefile.db not found. Create new save file? y/n ')).strip().lower()
@@ -103,6 +102,10 @@ def savedata(data):
     '''
     A function responsible for saving data.
     '''
+    '''TODO: FINISH THE FUNCTION'''
+    slowtext('Saving the game...\n')
     conn=sqlite3.connect('savefile.db')
     cur=conn.cursor()
     conn.close()
+    slowtext('Game saved succesfully.\n')
+

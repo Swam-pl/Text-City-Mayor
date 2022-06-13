@@ -10,6 +10,7 @@
 '''
 Various functions to work with save data.
 '''
+
 try:
     import datetime
     import os
@@ -18,7 +19,7 @@ try:
 except ImportError as e:
     print(f'Error 002: Import Error - refer to manual.txt for more information ({e}).')
     #When editing line above remember to also change it in other files.
-    input('Press ENTER to exit the game.')
+    input('Press ENTER to exit the game. ')
     raise SystemExit
 
 def createdata():
@@ -63,7 +64,7 @@ def readdata():
             if(length!=10):
                 raise Exception
         except Exception:
-            e=f'incorrect number of columns in database - expected 10, got {len(data)}'
+            e=f'Incorrect number of columns in database - expected 10, got {length}'
             errors('databaseerror',e)
             input(slowtext('Press ENTER to exit the game. '))
             return 'exit'
@@ -108,4 +109,3 @@ def savedata(data):
     cur=conn.cursor()
     conn.close()
     slowtext('Game saved succesfully.\n')
-

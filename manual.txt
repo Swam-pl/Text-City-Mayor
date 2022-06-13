@@ -1,17 +1,18 @@
 	Text City Mayor - manual
-
+	
 	TABLE OF CONTENTS
 	1. Errors
-
-===
+	
+	===
+	
 	[1] ERRORS
 	
 	While playing Text City Mayor you might encounter some errors. Below is a list of them with information about them.
-  
+	
 	* Error 001: Database Error
 	  This error happens when something went wrong with reading data from the database. Example could be that there are no records in the database. To fix this you can:
 	  1. Delete the database file/move it to another folder - the game will ask if it should create a new savefile
 	* Error 002: Import Error
-	  This error happens when the game can't import required files modules. To fix this:
+	  This error happens when the game can't import required modules. To fix this:
 	  1. Make sure you have all game files in one folder with their original names
 	  2. Make sure you haven't deleted/renamed any modules bundled with Python
